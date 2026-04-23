@@ -1,0 +1,97 @@
+{
+  "address": [
+    {
+      "address_1": "3100 Pomona Blvd",
+      "city": "Pomona",
+      "state": "California",
+      "zip_code": "91768",
+      "country": "United States"
+    },
+    {
+      "address_1": "1250 Beverly Hills",
+      "city": "Beverly Hills",
+      "state": "California",
+      "zip_code": "90210",
+      "country": "United States"
+    },
+    {
+      "address_1": "4532 W Kennedy Blvd #500",
+      "city": "Tampa",
+      "state": "Florida",
+      "zip_code": "33609",
+      "country": "United States"
+    },
+    {
+      "address_1": "45 W Miami",
+      "city": "Miami",
+      "state": "Florida",
+      "zip_code": "33125",
+      "country": "United States"
+    },
+    {
+      "address_1": "121 Truckers Ln",
+      "city": "Collins",
+      "state": "Georgia",
+      "zip_code": "30421",
+      "country": "United States"
+    },
+    {
+      "address_1": "121 Rome Ln",
+      "city": "Rome",
+      "state": "Georgia",
+      "zip_code": "30149",
+      "country": "United States"
+    },
+    {
+      "address_1": "3475 S Cicero Ave",
+      "city": "Cicero",
+      "state": "Illinois",
+      "zip_code": "60804",
+      "country": "United States"
+    },
+    {
+      "CompanyName": "AT 321986",
+      "address_1": "3475 Northbrook Ave",
+      "city": "Northbrook",
+      "state": "Illinois",
+      "zip_code": "60065",
+      "country": "United States"
+    },
+    {
+      "CompanyName": "AT 329435",
+      "address_1": "3475 Northbrook Ave",
+      "city": "Markham",
+      "state": "Illinois",
+      "zip_code": "60428",
+      "country": "United States"
+    },
+    {
+      "address_1": "3449 Morgan Ave",
+      "city": "Corpus Christi",
+      "state": "Texas",
+      "zip_code": "78405",
+      "country": "United States"
+    },
+    {
+      "address_1": "3449 Addison Ave",
+      "city": "Addison",
+      "state": "Texas",
+      "zip_code": "75001",
+      "country": "United States"
+    },
+    {
+      "address_1": "1914 Houghton Rd",
+      "city": "Dallas",
+      "state": "Texas",
+      "zip_code": "75217",
+      "country": "United States"
+    },
+    {
+      "address_1": "1950 Richardson Rd",
+      "city": "Richardson",
+      "state": "Texas",
+      "zip_code": "75080",
+      "country": "United States"
+    }
+  ]
+}

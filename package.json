@@ -1,0 +1,92 @@
+{
+  "name": "playwright-e2e-tests",
+  "version": "1.0.0",
+  "description": "Playwright Type script framework is designed for Web (Desktop & Mobile), API, and Electron apps. Stable and Robust layer on top of Playwright with inbuilt Utilities, Linting, Logging, Web hooks, Github actions, Reports and much more",
+  "keywords": [
+    "playwright",
+    "typescript",
+    "testing",
+    "framework",
+    "template"
+  ],
+  "license": "MIT",
+  "repository": "",
+  "author": "",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1.2.0",
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.12.0",
+    "@faker-js/faker": "^9.0.3",
+    "@playwright/test": "^1.50.0",
+    "@types/node": "^22.7.5",
+    "@typescript-eslint/eslint-plugin": "^8.8.1",
+    "@typescript-eslint/parser": "^8.8.1",
+    "allure-commandline": "^2.30.0",
+    "allure-playwright": "^3.0.0",
+    "axios": "^1.7.7",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "eslint": "^9.12.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.3",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsdoc": "^50.3.1",
+    "eslint-plugin-playwright": "^1.7.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "exceljs": "^4.4.0",
+    "globals": "^15.11.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "states-us": "^1.0.4",
+    "tslib": "^2.7.0",
+    "typescript": "5.6.3",
+    "winston": "^3.14.2"
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "build": "tsc",
+    "validate": "tsc --noEmit",
+    "ready": "rimraf dist node_modules package-lock.json && npm i",
+    "test": "playwright test",
+    "test:chromium": "playwright test --retries 0 --project=chromiumheadless",
+    "test:firefox": "playwright test --retries 0 --project=firefox",
+    "test:chromium-headed": "playwright test -j 1 --retries 0 --headed --project=chromium",
+    "local": "playwright test -j 1 --retries 0 --headed --project=chromium",
+    "test:reg": "playwright test --project=chromiumheadless -g '@reg'",
+    "test:smoke": "playwright test --project=chromiumheadless -g '@smoke'",
+    "report": "playwright show-report playwright-report",
+    "ui": "playwright test --project=chromiumheadless --ui-port 0",
+    "trace": "playwright show-trace --port 0",
+    "allure": "allure generate ./allure-results --clean && allure open ./allure-report",
+    "lint": "cross-env eslint 'tests/**/*.ts' 'test-setup/**/*.ts' 'playwright.config.ts'",
+    "lint:fix": "cross-env eslint 'tests/**/*.ts' 'test-setup/**/*.ts' 'playwright.config.ts' --fix",
+    "format": "cross-env prettier --write 'tests/**/*.ts' 'test-setup/**/*.ts' 'playwright.config.ts' '**/*.json' '**/*.md' '!package-lock.json' '!dist/**/*' '!build/**/*'",
+    "prepare": "husky",
+    "postinstall": "playwright install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{json,md,ts}": [
+      "cross-env prettier --write"
+    ],
+    "*.{ts}": "cross-env eslint --fix"
+  },
+  "dependencies": {
+    "@alex_neo/playwright-azure-reporter": "^1.12.0",
+    "@types/lodash": "^4.17.10",
+    "ci": "^2.3.0",
+    "date-fns": "^4.1.0",
+    "lodash": "^4.17.21",
+    "tsconfig-paths": "^4.2.0"
+  }
+}

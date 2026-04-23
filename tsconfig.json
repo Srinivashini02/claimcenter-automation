@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    "module": "Node16",
+    "target": "ESNext",
+    "outDir": "dist",
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
+    "sourceMap": true,
+    "declarationMap": false, // Generates a sourcemap for each corresponding '.d.ts' file
+    "declaration": false, // No need to generate declaration files (.d.ts) for a test project
+    "esModuleInterop": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "moduleResolution": "node16",
+    "importHelpers": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "resolveJsonModule": true,
+    "noImplicitReturns": true, // Ensures that all code paths in a function explicitly return a value
+    "noImplicitOverride": true, // Ensures that overriding methods in a subclass are marked with the 'override' keyword
+    "paths": {
+      "@tests/*": ["./tests/*"],
+      "@apps/*": ["./tests/apps/*"],
+      "@testdata/*": ["./tests/testdata/*"],
+      "@pagesetup": ["test-setup/page-setup"],
+      "@timeouts": ["src/playwright-utils/constants/timeouts"],
+      "@loadstate": ["src/playwright-utils/constants/loadstate"],
+      "@logger": ["src/playwright-utils/logger/custom-logger"],
+      "@parameter-types": ["src/playwright-utils/types/parameter-types"],
+      "@playwright-utils": ["src/playwright-utils"],
+      "@playwright-utils/*": ["src/playwright-utils/*"],
+      "@action-utils": ["src/playwright-utils/utils/action-utils"],
+      "@assert-utils": ["src/playwright-utils/utils/assert-utils"],
+      "@element-utils": ["src/playwright-utils/utils/element-utils"],
+      "@locator-utils": ["src/playwright-utils/utils/locator-utils"],
+      "@page-utils": ["src/playwright-utils/utils/page-utils"],
+      "@excel-utils": ["src/playwright-utils/utils/excel-utils"],
+      "@steps": ["src/playwright-utils/steps"]
+    }
+  },
+  "include": ["src/**/*.ts", "test-setup/**/*.ts", "tests/**/*.ts", "playwright.config.ts"],
+  "exclude": ["node_modules", "dist"]
+}

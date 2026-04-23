@@ -1,0 +1,17 @@
+node_modules/
+test-results/
+playwright-report/
+playwright/.cache/
+playwright/.auth/
+.env
+.vscode
+.idea
+.DS_Store
+allure*
+dist
+package-lock.json
+logs/info.log
+.husk/_/husky.sh
+.husky/_/husky.sh
+./testresults.xlsx
+.taskkey
