@@ -124,6 +124,10 @@ export const pageComponents = {
     textPolicy: (label: string | RegExp, alias?: string) => {
       return component(() => getLocatorByText(label).locator('xpath=ancestor::div[contains(@class,"gw-InputWidget")]').locator('input'), alias);
     },
+    reportedByName: (alias?: string) => {
+      const selector = 'select[name*="ReportedBy_Name"]';
+      return component(() => getLocator(selector).first(), alias);
+    },
     // optionsMenu: (fieldLabel: string | RegExp, alias?: string) => {
     //   return component(() => {
     //     return getLocatorByLabel(fieldLabel, { exact: true }).locator('xpath=ancestor::div[contains(@class,"gw-InputWidget")]').locator('div[role="button"][aria-label="options"]');

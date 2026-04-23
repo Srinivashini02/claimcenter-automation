@@ -5,6 +5,12 @@ export * as loginPage from 'tests/apps/shared/cloud/login';
 export * as searchHelper from 'tests/apps/helpers/on-prem/search-helper';
 export * as newClaimHelper from 'tests/apps/helpers/cloud/new-claim-helper';
 export * as createpolicyHelper from 'tests/apps/helpers/cloud/create-policy-helper';
+export * as basicInfoHelper from 'tests/apps/helpers/cloud/basic-info-helper';
+export * as addClaimHelper from 'tests/apps/helpers/cloud/add-claim-helper';
+export * as serviceHelper from 'tests/apps/helpers/cloud/services-helper';
+export * as saveAssignHelper from 'tests/apps/helpers/cloud/save-assign-helper';
+export * as savedHelper from 'tests/apps/helpers/cloud/saved-claim-helper';
+export * as actionHelper from 'tests/apps/helpers/cloud/action-menu-helper';
 export * as topmenu from 'tests/apps/shared/on-prem/top-menu';
 
 export async function loginToCCApp(role: string) {
