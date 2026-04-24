@@ -12,7 +12,7 @@ export async function clickActionsMenu() {
     await cMenu.hover();
     const collision = page.getByRole('menuitem', { name: 'Comprehensive', exact: true });
     await collision.click();
-    const claimantbtn = page.locator('[aria-label="Claimant"]');
+    const claimantbtn = page.getByText('Claimant', { exact: true });
     await claimantbtn.waitFor({ state: 'visible', timeout: 10000 });
     await claimantbtn.selectOption({ index: 1 });
 

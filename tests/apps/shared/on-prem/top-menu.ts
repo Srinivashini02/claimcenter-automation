@@ -1,5 +1,6 @@
+import { getPage } from '@playwright-utils';
 import { steps } from '@playwright-utils/steps';
-import test from '@playwright/test';
+import test, { expect } from '@playwright/test';
 import { pageComponents } from 'test-setup/locator-templates';
 
 
@@ -111,9 +112,10 @@ export async function createpolicy(policyNum: string, policyType: string, date: 
     await steps.typeText(lossDateInput, date);
     await steps.typeText(effectiveDateInput, effDate);
     await steps.typeText(expirationDateInput, expDate);
-    await steps.click(insuredNameOptions);
-    await steps.wait(300);
-    await steps.click(newPerson);
+    await insuredName();
+    // await steps.click(insuredNameOptions);
+    // await steps.wait(300);
+    // await steps.click(newPerson);
     await steps.typeText(firstName, firstNameVal);
     await steps.typeText(lastName, lastNameVal);
     await steps.scrollToView(address1);
@@ -148,4 +150,14 @@ export async function service() {
 
 export async function saveAssign() {
   await steps.click(finishBtn);
+}
+
+export async function insuredName() {
+  const page = getPage();
+  await page.locator('#FNOLWizard-FNOLWizard_FindPolicyScreen-FNOLWizardFindPolicyPanelSet-NewClaimPolicyGeneralPanelSet-NewClaimPolicyGeneralDV-Insured_Name-Insured_NameMenuIcon div[role="button"]').click();
+  await page.locator('#FNOLWizard-FNOLWizard_FindPolicyScreen-FNOLWizardFindPolicyPanelSet-NewClaimPolicyGeneralPanelSet-NewClaimPolicyGeneralDV-Insured_Name-ClaimNewContactPickerMenuItemSet-NewContactPickerMenuItemSet_NewPerson div[role="menuitem"]').click();
+  //await steps.click(insuredNameOptions);
+  //const newPerson = page.getByRole('menuitem', { name: 'New Person' });
+  //await expect(newPerson).toBeVisible();
+  //await newPerson.click();
 }
