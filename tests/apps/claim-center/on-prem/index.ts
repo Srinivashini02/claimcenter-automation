@@ -1,11 +1,21 @@
 import * as appHelpers from 'tests/apps/helpers/app-helper';
-import { doLogout, loginToApplication } from 'tests/apps/shared/on-prem/login';
+import { doLogout, loginToApplication } from 'tests/apps/shared/cloud/login';
 import { APP } from 'tests/config/env-config';
-export * as loginPage from 'tests/apps/shared/on-prem/login';
+export * as loginPage from 'tests/apps/shared/cloud/login';
+export * as searchHelper from 'tests/apps/helpers/on-prem/search-helper';
+export * as newClaimHelper from 'tests/apps/helpers/cloud/new-claim-helper';
+export * as createpolicyHelper from 'tests/apps/helpers/cloud/create-policy-helper';
+export * as basicInfoHelper from 'tests/apps/helpers/cloud/basic-info-helper';
+export * as addClaimHelper from 'tests/apps/helpers/cloud/add-claim-helper';
+export * as serviceHelper from 'tests/apps/helpers/cloud/services-helper';
+export * as saveAssignHelper from 'tests/apps/helpers/cloud/save-assign-helper';
+export * as savedHelper from 'tests/apps/helpers/cloud/saved-claim-helper';
+export * as actionHelper from 'tests/apps/helpers/cloud/action-menu-helper';
+export * as topmenu from 'tests/apps/shared/on-prem/top-menu';
 
 export async function loginToCCApp(role: string) {
-  await appHelpers.navigateToApp(APP.claimCenter);
-  await loginToApplication(APP.policyCenter, role);
+  await appHelpers.navigateToAppCC(APP.claimCenter);
+  await loginToApplication(APP.claimCenter, role);
 }
 
 export async function logoutOfCCApp() {

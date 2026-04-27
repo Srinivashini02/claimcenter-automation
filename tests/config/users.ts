@@ -1,4 +1,4 @@
-import { getUserPassword, getUserPasswordClaim } from './env-variables';
+import { getUserPassword } from './env-variables';
 import { User } from './types';
 import 'dotenv/config';
 // constants for user roles

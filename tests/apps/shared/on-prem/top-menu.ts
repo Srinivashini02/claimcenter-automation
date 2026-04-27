@@ -4,9 +4,9 @@ import test, { expect } from '@playwright/test';
 import { pageComponents } from 'test-setup/locator-templates';
 
 
-const search = pageComponents.cloud.topSearch('Search', 'search');
-const policy = pageComponents.cloud.textPolicy('Policy #', 'policyNumber');
-const searchsubmit = pageComponents.cloud.button('Search', 'searchSubmit');
+const search = pageComponents.onprem.searchItem('Searc', 'search');
+const policy = pageComponents.onprem.textPolicy('Policy #', 'policyNumber');
+const searchsubmit = pageComponents.onprem.searchButton('Search', 'searchSubmit');
 const claimclick = pageComponents.cloud.topMenuDropdown('Claim', 'claim');
 const newClaimOption = pageComponents.shared.menuItem('New Claim', 'newClaimOption');
 const unVerifiedPolicy = pageComponents.cloud.radioOption('Create Unverified Policy', 'create unverified policy');

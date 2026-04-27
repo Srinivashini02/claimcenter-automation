@@ -12,8 +12,8 @@ export async function clickActionsMenu() {
     await cMenu.hover();
     const collision = page.getByRole('menuitem', { name: 'Comprehensive', exact: true });
     await collision.click();
-    const claimantbtn = page.getByText('Claimant', { exact: true });
-    await claimantbtn.waitFor({ state: 'visible', timeout: 10000 });
-    await claimantbtn.selectOption({ index: 1 });
+    const claimantDropdown = page.getByRole('combobox', { name: 'Claimant' });
+    await claimantDropdown.waitFor({ state: 'visible', timeout: 10000 });
+    await claimantDropdown.selectOption({ index: 1 });
 
 }

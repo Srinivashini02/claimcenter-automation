@@ -7,8 +7,8 @@ test.describe.configure({ mode: 'parallel' });
 
 const cc = xcenters.ccCloud;
 
-test.describe('Claims Center Suite', () => {
-    test('Claims Center Login', { tag: '@smoke' }, async () => {
+test.describe('ClaimsCenter Cloud Suite', () => {
+    test('ClaimsCenter Cloud Login', { tag: '@smoke' }, async () => {
         //Login to application
         await cc.loginToCCApp(roles.superuser);
 
@@ -34,4 +34,3 @@ test.describe('Claims Center Suite', () => {
         await cc.actionHelper.clickActionsMenu();
     });
 });
-

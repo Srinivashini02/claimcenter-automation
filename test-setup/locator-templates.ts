@@ -37,6 +37,15 @@ export const pageComponents = {
     button: (label: string | RegExp, alias?: string) => {
       return component(() => getLocatorByRole('button', { name: `${label}` }), alias);
     },
+    searchButton: (label: string | RegExp = /Search/i, alias?: string) => {
+      return component(() => getLocatorByRole('link', { name: label, exact: true }), alias);
+    },
+    searchItem: (label: string | RegExp, alias?: string) => {
+      return component(() => getLocatorByRole('menuitem').filter({ hasText: label }), alias);
+    },
+    textPolicy: (label: string | RegExp, alias?: string) => {
+      return component(() => getLocatorByText(label).locator('xpath=ancestor::div[contains(@class,"gw-InputWidget")]').locator('input'), alias);
+    },
     buttonExp: (label: string | RegExp, alias?: string) => {
       return component(
         () => getLocatorByText(label).locator('../ancestor::tr[1]/td[1]').getByRole('link', { name: 'Select' }),
@@ -84,7 +93,11 @@ export const pageComponents = {
       return component(() => getLocatorByRole('heading', { name: label }), alias);
     },
     button: (label: string | RegExp, alias?: string) => {
-      return component(() => getLocatorByRole('button', { name: label, exact: true }), alias);
+      return component(() => {
+        const primary = getLocatorByRole('button', { name: label, exact: true });
+        const fallback = getLocator('div[role="button"]').filter({ has: getLocator(`[aria-label="${label}"]`), });
+        return primary.or(fallback).first();
+      }, alias);
     },
     buttonOptions: (label: string | RegExp, alias?: string) => {
       return component(() => getLocatorByText(label).locator('xpath=ancestor::div[contains(@class,"gw-InputWidget")]').locator('div[role="button"][aria-label="options"]'), alias);
@@ -120,6 +133,9 @@ export const pageComponents = {
     },
     topSearch: (label: string | RegExp, alias?: string) => {
       return component(() => getLocator(`//*[@aria-label='${label}']`), alias);
+    },
+    searchItem: (label: string | RegExp, alias?: string) => {
+      return component(() => getLocatorByRole('menuitem').filter({ hasText: label }), alias);
     },
     textPolicy: (label: string | RegExp, alias?: string) => {
       return component(() => getLocatorByText(label).locator('xpath=ancestor::div[contains(@class,"gw-InputWidget")]').locator('input'), alias);
