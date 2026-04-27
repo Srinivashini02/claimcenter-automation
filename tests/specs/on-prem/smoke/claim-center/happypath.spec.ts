@@ -18,5 +18,8 @@ test.describe('ClaimsCenter onPrem Suite', () => {
         //Click on new claim 
         await ccPrem.newClaimHelper.newClaim();
 
+        //Search or Create Policy 
+        await ccPrem.createpolicyHelper.createPolicy('POL123', 'Personal Auto', '04/22/2026', '04/23/2025', '04/23/2026', 'John', 'Doe', '9231 Giles Pond Dr', 'Mechanicsville', 'VA', '23116', 'Home');
+
     });
 });

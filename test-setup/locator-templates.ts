@@ -40,6 +40,18 @@ export const pageComponents = {
     searchButton: (label: string | RegExp = /Search/i, alias?: string) => {
       return component(() => getLocatorByRole('link', { name: label, exact: true }), alias);
     },
+    claimTab: (alias?: string) => {
+      return component(() => getLocator('#TabBar-ClaimTab > .gw-action--inner'), alias);
+    },
+    claimTabExpandButton: (alias?: string) => {
+      return component(() => getLocator('#TabBar-ClaimTab > .gw-action--expand-button'), alias);
+    },
+    newClaimMenuItem: (alias?: string) => {
+      return component(() => getLocator('#TabBar-ClaimTab .gw-subMenu >> text=New Claim'), alias);
+    },
+    // newClaimButton: (label: string | RegExp = /New Claim/i, alias?: string) => {
+    //   return component(() => getLocatorByRole('menuitem', { name: label, exact: true }), alias);
+    // },
     searchItem: (label: string | RegExp, alias?: string) => {
       return component(() => getLocatorByRole('menuitem').filter({ hasText: label }), alias);
     },
@@ -57,6 +69,10 @@ export const pageComponents = {
     },
     topMenuDropdown: (label: string | RegExp, alias?: string) => {
       return component(() => getLocator(`//*[text()='${label}']/../../*[@class='gw-action--expand-button']`), alias);
+    },
+    reportedByNameOn: (alias?: string) => {
+      const selector = 'select[name="FNOLWizard-FullWizardStepSet-FNOLWizard_BasicInfoScreen-PanelRow-BasicInfoDetailViewPanelDV-ReportedBy_Name"]';
+      return component(() => getLocator(selector).first(), alias);
     },
     dropdown: (label: string | RegExp, alias?: string, table: boolean = false) => {
       if (table) {

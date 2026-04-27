@@ -7,8 +7,9 @@ import { pageComponents } from 'test-setup/locator-templates';
 const search = pageComponents.onprem.searchItem('Searc', 'search');
 const policy = pageComponents.onprem.textPolicy('Policy #', 'policyNumber');
 const searchsubmit = pageComponents.onprem.searchButton('Search', 'searchSubmit');
-const claimclick = pageComponents.cloud.topMenuDropdown('Claim', 'claim');
-const newClaimOption = pageComponents.shared.menuItem('New Claim', 'newClaimOption');
+const claimTab = pageComponents.onprem.claimTab('Claim');
+const newClaimOption = pageComponents.onprem.claimTabExpandButton('Claim');
+const newClaimMenu = pageComponents.onprem.newClaimMenuItem('New Claim');
 const unVerifiedPolicy = pageComponents.cloud.radioOption('Create Unverified Policy', 'create unverified policy');
 const findPolicyNumber = pageComponents.cloud.textPolicyNumber('Policy Number', 'policy number');
 const type = pageComponents.cloud.dropdownval('Type', 'type');
@@ -26,7 +27,7 @@ const zipCodeField = pageComponents.cloud.textInput('ZIP Code', 'ZIP code');
 const addressType = pageComponents.cloud.dropdown('Address Type', 'address type');
 const update = pageComponents.cloud.button('Update', 'update');
 const nextButton = pageComponents.cloud.button('Next', 'Next Button');
-const reportedNameDrop = pageComponents.cloud.reportedByName('Name Select');
+const reportedByNameOn = pageComponents.onprem.reportedByNameOn('Name Select');
 const lossCauseVal = pageComponents.cloud.dropdown('Loss Cause', 'loss cause input');
 const locate = pageComponents.cloud.dropdown('Location', 'location Input');
 const finishBtn = pageComponents.cloud.button('Finish', 'finish button');
@@ -42,8 +43,9 @@ export async function searchClaim(policyNumber: string) {
 
 export async function newClaim() {
   await test.step(`Create new claim`, async () => {
-    await steps.click(claimclick);
+    await steps.click(claimTab);
     await steps.click(newClaimOption);
+    await steps.click(newClaimMenu);
   });
 }
 
@@ -134,7 +136,7 @@ export async function createpolicy(policyNum: string, policyType: string, date: 
 }
 
 export async function basicInfo(fullName: string) {
-  await steps.selectOptionByText(reportedNameDrop, fullName);
+  await steps.selectOptionByText(reportedByNameOn, fullName);
   await steps.click(nextButton);
 }
 
