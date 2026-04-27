@@ -136,7 +136,7 @@ export async function createpolicy(policyNum: string, policyType: string, date: 
 }
 
 export async function basicInfo(fullName: string) {
-  await steps.selectOptionByText(reportedByNameOn, fullName);
+  await steps.selectOptionByValue(reportedByNameOn, fullName);
   await steps.click(nextButton);
 }
 

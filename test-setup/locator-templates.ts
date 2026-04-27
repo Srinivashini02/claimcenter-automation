@@ -70,9 +70,13 @@ export const pageComponents = {
     topMenuDropdown: (label: string | RegExp, alias?: string) => {
       return component(() => getLocator(`//*[text()='${label}']/../../*[@class='gw-action--expand-button']`), alias);
     },
-    reportedByNameOn: (alias?: string) => {
-      const selector = 'select[name="FNOLWizard-FullWizardStepSet-FNOLWizard_BasicInfoScreen-PanelRow-BasicInfoDetailViewPanelDV-ReportedBy_Name"]';
+    reportedByName: (alias?: string) => {
+      const selector = 'select[name*="ReportedBy_Name"]';
       return component(() => getLocator(selector).first(), alias);
+    },
+    reportedByNameOn: (alias?: string) => {
+      const xpath = '//*[@id="FNOLWizard-FullWizardStepSet-FNOLWizard_BasicInfoScreen-PanelRow-BasicInfoDetailViewPanelDV-ReportedBy_Name"]/div[1]/div/select';
+      return component(() => getLocator(`xpath=${xpath}`), alias);
     },
     dropdown: (label: string | RegExp, alias?: string, table: boolean = false) => {
       if (table) {
