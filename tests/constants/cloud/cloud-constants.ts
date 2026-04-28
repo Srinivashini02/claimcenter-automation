@@ -4,6 +4,7 @@ export const filePaths = {
 
 export const dataFilePaths = {
   policyCenterData: 'tests\\testdata\\policyCenter\\PolicyCenterData.xlsx',
+  claimCenterData: 'tests\\testdata\\claimCenter\\ClaimCenterData.xlsx',
 };
 
 export const dataCCFilePaths = {
