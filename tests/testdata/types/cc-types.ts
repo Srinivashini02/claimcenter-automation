@@ -14,8 +14,6 @@ export type Claim = {
   lossInfo?: LossInfo;
   description?: string;
   date?: string;
-  effDate?: string;
-  expDate?: string;
   firstName?: string;
   lastName?: string;
   address1?: string;
@@ -27,8 +25,8 @@ export type Claim = {
 
 export type LossInfo = {
   lossDate?: string;
-  effectiveDate?: string;
-  expirationDate?: string;
+  effDate?: string;
+  expDate?: string;
   whatHappened?: string;
   lossCause?: string;
 };

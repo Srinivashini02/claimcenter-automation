@@ -3,7 +3,6 @@ import { steps } from '@playwright-utils/steps';
 import test, { expect } from '@playwright/test';
 import { pageComponents } from 'test-setup/locator-templates';
 
-
 const search = pageComponents.onprem.searchItem('Searc', 'search');
 const policy = pageComponents.onprem.textPolicy('Policy #', 'policyNumber');
 const searchsubmit = pageComponents.onprem.searchButton('Search', 'searchSubmit');
@@ -49,7 +48,20 @@ export async function newClaim() {
   });
 }
 
-export async function createpolicy(policyNum: string, policyType: string, date: string, effDate: string, expDate: string, firstNameVal: string, lastNameVal: string, address1Val: string, cityVal: string, stateValue: string, zipCodeVal: string, addressTypeVal: string) {
+export async function createpolicy(
+  policyNum: string,
+  policyType: string,
+  date: string,
+  effDate: string,
+  expDate: string,
+  firstNameVal: string,
+  lastNameVal: string,
+  address1Val: string,
+  cityVal: string,
+  stateValue: string,
+  zipCodeVal: string,
+  addressTypeVal: string,
+) {
   await test.step(`Create Policy`, async () => {
     const stateMap: Record<string, string> = {
       AL: 'Alabama',
@@ -103,7 +115,7 @@ export async function createpolicy(policyNum: string, policyType: string, date: 
       WA: 'Washington',
       WV: 'West Virginia',
       WI: 'Wisconsin',
-      WY: 'Wyoming'
+      WY: 'Wyoming',
     };
 
     const stateFieldVal = stateMap[stateValue];
@@ -112,6 +124,7 @@ export async function createpolicy(policyNum: string, policyType: string, date: 
     await steps.click(type);
     await steps.selectOptionByText(type, policyType);
     await steps.typeText(lossDateInput, date);
+    //await steps.wait(1500);
     await steps.typeText(effectiveDateInput, effDate);
     await steps.typeText(expirationDateInput, expDate);
     await insuredName();
@@ -156,8 +169,16 @@ export async function saveAssign() {
 
 export async function insuredName() {
   const page = getPage();
-  await page.locator('#FNOLWizard-FNOLWizard_FindPolicyScreen-FNOLWizardFindPolicyPanelSet-NewClaimPolicyGeneralPanelSet-NewClaimPolicyGeneralDV-Insured_Name-Insured_NameMenuIcon div[role="button"]').click();
-  await page.locator('#FNOLWizard-FNOLWizard_FindPolicyScreen-FNOLWizardFindPolicyPanelSet-NewClaimPolicyGeneralPanelSet-NewClaimPolicyGeneralDV-Insured_Name-ClaimNewContactPickerMenuItemSet-NewContactPickerMenuItemSet_NewPerson div[role="menuitem"]').click();
+  await page
+    .locator(
+      '#FNOLWizard-FNOLWizard_FindPolicyScreen-FNOLWizardFindPolicyPanelSet-NewClaimPolicyGeneralPanelSet-NewClaimPolicyGeneralDV-Insured_Name-Insured_NameMenuIcon div[role="button"]',
+    )
+    .click();
+  await page
+    .locator(
+      '#FNOLWizard-FNOLWizard_FindPolicyScreen-FNOLWizardFindPolicyPanelSet-NewClaimPolicyGeneralPanelSet-NewClaimPolicyGeneralDV-Insured_Name-ClaimNewContactPickerMenuItemSet-NewContactPickerMenuItemSet_NewPerson div[role="menuitem"]',
+    )
+    .click();
   //await steps.click(insuredNameOptions);
   //const newPerson = page.getByRole('menuitem', { name: 'New Person' });
   //await expect(newPerson).toBeVisible();
