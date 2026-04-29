@@ -36,6 +36,6 @@ test.describe('Claims Center Suite', () => {
     //New Claim Saved
     await cc.savedHelper.newClaimsaved();
     //Click on Actions
-    //await cc.actionHelper.clickActionsMenu();
+    await cc.actionHelper.clickActionsMenu();
   });
 });
