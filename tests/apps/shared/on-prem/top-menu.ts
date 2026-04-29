@@ -2,6 +2,7 @@ import { getPage } from '@playwright-utils';
 import { steps } from '@playwright-utils/steps';
 import test, { expect } from '@playwright/test';
 import { pageComponents } from 'test-setup/locator-templates';
+import { Claim } from '@tests/testdata/types/cc-types';
 
 const search = pageComponents.onprem.searchItem('Searc', 'search');
 const policy = pageComponents.onprem.textPolicy('Policy #', 'policyNumber');
@@ -28,9 +29,12 @@ const update = pageComponents.cloud.button('Update', 'update');
 const nextButton = pageComponents.cloud.button('Next', 'Next Button');
 const reportedByNameOn = pageComponents.onprem.dropdown('Name', 'Name');
 const lossCauseVal = pageComponents.cloud.dropdown('Loss Cause', 'loss cause input');
+const whatHappened = pageComponents.onprem.textarea('What Happened?', 'what happened');
 
 const locate = pageComponents.cloud.dropdown('Location', 'location Input');
 const finishBtn = pageComponents.cloud.button('Finish', 'finish button');
+const basicInformationPage = pageComponents.cloud.pageTitle('Basic information', 'Basic information');
+const addClaimInformationPage = pageComponents.cloud.pageTitle('Add claim information', 'Add claim information');
 
 export async function searchClaim(policyNumber: string) {
   await test.step(`Search Claim`, async () => {
@@ -122,7 +126,8 @@ export async function createpolicy(
     const stateFieldVal = stateMap[stateValue];
     await steps.click(unVerifiedPolicy);
     await steps.typeText(findPolicyNumber, policyNum);
-    //await steps.click(type);
+    await steps.click(type);
+    await steps.click(type);
     await steps.selectOptionByText(type, policyType);
     await steps.typeText(lossDateInput, date);
     //await steps.wait(1500);
@@ -151,13 +156,20 @@ export async function createpolicy(
 }
 
 export async function basicInfo(fullName: string) {
+  await steps.waitForPageToLoad(basicInformationPage);
   await steps.selectOptionByText(reportedByNameOn, fullName);
   await steps.click(nextButton);
 }
 
-export async function addClaim(lossVal: string, fulladdress: string) {
-  await steps.selectOptionByText(lossCauseVal, lossVal);
-  await steps.selectOptionByText(locate, fulladdress);
+export async function addclaimInfo(claimsData: { claim: Claim }) {
+  const page = getPage();
+  await steps.waitForPageToLoad(addClaimInformationPage);
+  await steps.typeText(whatHappened, claimsData.claim.lossInfo?.whatHappened ?? '');
+  await steps.selectOptionByText(lossCauseVal, claimsData.claim.lossInfo?.lossCause ?? '');
+  await steps.selectOptionByText(
+    locate,
+    `${claimsData.claim.address1 ?? ' '}, ${claimsData.claim.city ?? ' '}, ${claimsData.claim.state ?? ' '} ${claimsData.claim.zipcode ?? ' '}`,
+  );
   await steps.click(nextButton);
 }
 
@@ -176,6 +188,19 @@ export async function insuredName() {
       '#FNOLWizard-FNOLWizard_FindPolicyScreen-FNOLWizardFindPolicyPanelSet-NewClaimPolicyGeneralPanelSet-NewClaimPolicyGeneralDV-Insured_Name-Insured_NameMenuIcon div[role="button"]',
     )
     .click();
+  if (
+    !(await page
+      .locator(
+        '#FNOLWizard-FNOLWizard_FindPolicyScreen-FNOLWizardFindPolicyPanelSet-NewClaimPolicyGeneralPanelSet-NewClaimPolicyGeneralDV-Insured_Name-ClaimNewContactPickerMenuItemSet-NewContactPickerMenuItemSet_NewPerson div[role="menuitem"]',
+      )
+      .isVisible())
+  ) {
+    await page
+      .locator(
+        '#FNOLWizard-FNOLWizard_FindPolicyScreen-FNOLWizardFindPolicyPanelSet-NewClaimPolicyGeneralPanelSet-NewClaimPolicyGeneralDV-Insured_Name-Insured_NameMenuIcon div[role="button"]',
+      )
+      .click();
+  }
   await page
     .locator(
       '#FNOLWizard-FNOLWizard_FindPolicyScreen-FNOLWizardFindPolicyPanelSet-NewClaimPolicyGeneralPanelSet-NewClaimPolicyGeneralDV-Insured_Name-ClaimNewContactPickerMenuItemSet-NewContactPickerMenuItemSet_NewPerson div[role="menuitem"]',

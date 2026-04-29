@@ -26,12 +26,10 @@ test.describe('Claims Center Suite', () => {
 
     //Search or Create Policy
     await cc.createpolicyHelper.createPolicy(claimsData);
-    await steps.wait(1000);
     await cc.basicInfoHelper.basicInfo(claimsData);
     // Add Claim Information
     await steps.wait(1000);
     await cc.addClaimHelper.addclaimInfo(claimsData);
-
     await cc.serviceHelper.service();
     //Save and Assign Claim
     await cc.saveAssignHelper.saveAssign();

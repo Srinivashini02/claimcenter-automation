@@ -1,7 +1,7 @@
 import { logger } from '@logger';
 import { test } from '@pagesetup';
 import * as p from 'src/playwright-utils/utils';
-import { Component, component, waitForAllRequests } from '@playwright-utils';
+import { Component, waitForAllRequests } from '@playwright-utils';
 import {
   ClearOptions,
   ClickOptions,
@@ -323,6 +323,20 @@ export async function selectOption(
       await p.selectByText(component.getLocator(), value, options);
     } catch (error) {
       await p.selectByValue(component.getLocator(), value, options);
+    }
+  });
+}
+export async function waitForPageToLoad(component: Component, description?: string) {
+  const stepDesc = description ? description : `waiting for page '${component.alias}' to load`;
+  await test.step(stepDesc, async () => {
+    await p.waitForElementToBeVisible(component.getLocator());
+    try {
+      if (component.alias) {
+        await p.getPage().waitForFunction(pagetitle => document.title.includes(pagetitle), component.alias);
+        logger.warn(` '${component.alias}' page is loaded successfully `);
+      }
+    } catch (error) {
+      logger.warn(`page title did not contain '${component.alias}' after waiting for page to load`);
     }
   });
 }
