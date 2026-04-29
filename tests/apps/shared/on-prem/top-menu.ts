@@ -26,8 +26,9 @@ const zipCodeField = pageComponents.cloud.textInput('ZIP Code', 'ZIP code');
 const addressType = pageComponents.cloud.dropdown('Address Type', 'address type');
 const update = pageComponents.cloud.button('Update', 'update');
 const nextButton = pageComponents.cloud.button('Next', 'Next Button');
-const reportedByNameOn = pageComponents.onprem.reportedByNameOn('Name Select');
+const reportedByNameOn = pageComponents.onprem.dropdown('Name', 'Name');
 const lossCauseVal = pageComponents.cloud.dropdown('Loss Cause', 'loss cause input');
+
 const locate = pageComponents.cloud.dropdown('Location', 'location Input');
 const finishBtn = pageComponents.cloud.button('Finish', 'finish button');
 
@@ -121,7 +122,7 @@ export async function createpolicy(
     const stateFieldVal = stateMap[stateValue];
     await steps.click(unVerifiedPolicy);
     await steps.typeText(findPolicyNumber, policyNum);
-    await steps.click(type);
+    //await steps.click(type);
     await steps.selectOptionByText(type, policyType);
     await steps.typeText(lossDateInput, date);
     //await steps.wait(1500);
@@ -144,12 +145,13 @@ export async function createpolicy(
     await addressType.waitForStable();
     await steps.selectOptionByText(addressType, addressTypeVal);
     await steps.click(update);
+    await steps.typeText(lossDateInput, date);
     await steps.click(nextButton);
   });
 }
 
 export async function basicInfo(fullName: string) {
-  await steps.selectOptionByValue(reportedByNameOn, fullName);
+  await steps.selectOptionByText(reportedByNameOn, fullName);
   await steps.click(nextButton);
 }
 
