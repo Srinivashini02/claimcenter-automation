@@ -289,9 +289,11 @@ export async function selectCheckbox(component: Component, options?: ClickOption
 export async function clearFieldByEvent(component: Component, description?: string) {
   const stepDesc = description ? description : `clearing field ${component.alias}`;
   await test.step(stepDesc, async () => {
-    await component.getLocator().evaluate(elm => {
-      (elm as HTMLInputElement).value = '';
-      elm.dispatchEvent(new Event('input', { bubbles: true }));
+    // Cast 'elm' to HTMLInputElement inside the evaluate block
+    await component.getLocator().evaluate((elm: HTMLElement) => {
+      const input = elm as HTMLInputElement;
+      input.value = '';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
     });
   });
 }

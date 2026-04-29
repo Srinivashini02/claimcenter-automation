@@ -31,6 +31,10 @@ export const pageComponents = {
     textInput: (label: string | RegExp, alias?: string) => {
       return component(() => getLocatorByLabel(label).locator(`//*[@class='gw-vw--value']//input`), alias);
     },
+    textarea: (label: string | RegExp, alias?: string) => {
+      return component(() => getLocatorByLabel(label).locator('textarea'), alias);
+    },
+
     link: (label: string | RegExp, alias?: string) => {
       return component(() => getLocatorByRole('link', { name: `${label}` }), alias);
     },
@@ -56,7 +60,11 @@ export const pageComponents = {
       return component(() => getLocatorByRole('menuitem').filter({ hasText: label }), alias);
     },
     textPolicy: (label: string | RegExp, alias?: string) => {
-      return component(() => getLocatorByText(label).locator('xpath=ancestor::div[contains(@class,"gw-InputWidget")]').locator('input'), alias);
+      return component(
+        () =>
+          getLocatorByText(label).locator('xpath=ancestor::div[contains(@class,"gw-InputWidget")]').locator('input'),
+        alias,
+      );
     },
     buttonExp: (label: string | RegExp, alias?: string) => {
       return component(
@@ -75,15 +83,19 @@ export const pageComponents = {
       return component(() => getLocator(selector).first(), alias);
     },
     reportedByNameOn: (alias?: string) => {
-      const xpath = '//*[@id="FNOLWizard-FullWizardStepSet-FNOLWizard_BasicInfoScreen-PanelRow-BasicInfoDetailViewPanelDV-ReportedBy_Name"]/div[1]/div/select';
+      const xpath =
+        '//*[@id="FNOLWizard-FullWizardStepSet-FNOLWizard_BasicInfoScreen-PanelRow-BasicInfoDetailViewPanelDV-ReportedBy_Name"]/div[1]/div/select';
       return component(() => getLocator(`xpath=${xpath}`), alias);
     },
     dropdown: (label: string | RegExp, alias?: string, table: boolean = false) => {
       if (table) {
         return component(() => getLocator(`//tr[contains(., '${label}')]//select`), alias);
       }
+      return component(() => getLocatorByLabel(`${label}`, { exact: true }).locator(`select`), alias);
+    },
+    dropdownval: (label: string | RegExp, alias?: string) => {
       return component(
-        () => getLocatorByLabel(`${label}`, { exact: true }).locator(`//*[@class='gw-vw--value']//select`),
+        () => getLocatorByText(label).locator('xpath=ancestor::*[contains(@class,"gw-InputWidget")]//select').first(),
         alias,
       );
     },
@@ -115,12 +127,18 @@ export const pageComponents = {
     button: (label: string | RegExp, alias?: string) => {
       return component(() => {
         const primary = getLocatorByRole('button', { name: label, exact: true });
-        const fallback = getLocator('div[role="button"]').filter({ has: getLocator(`[aria-label="${label}"]`), });
+        const fallback = getLocator('div[role="button"]').filter({ has: getLocator(`[aria-label="${label}"]`) });
         return primary.or(fallback).first();
       }, alias);
     },
     buttonOptions: (label: string | RegExp, alias?: string) => {
-      return component(() => getLocatorByText(label).locator('xpath=ancestor::div[contains(@class,"gw-InputWidget")]').locator('div[role="button"][aria-label="options"]'), alias);
+      return component(
+        () =>
+          getLocatorByText(label)
+            .locator('xpath=ancestor::div[contains(@class,"gw-InputWidget")]')
+            .locator('div[role="button"][aria-label="options"]'),
+        alias,
+      );
     },
     // select: (label: string | RegExp, alias?: string) => {
     //   return component(() => {
@@ -137,10 +155,19 @@ export const pageComponents = {
       return component(() => getLocatorByText(`${label}`).locator('..//select'), alias);
     },
     statedropdown: (label: string | RegExp, alias?: string) => {
-      return component(() => getLocatorByText(label).locator('xpath=ancestor::*[contains(@class,"gw-InputWidget")]').locator(`//select[contains(@name,'GlobalAddressInputSet-State')]`), alias);
+      return component(
+        () =>
+          getLocatorByText(label)
+            .locator('xpath=ancestor::*[contains(@class,"gw-InputWidget")]')
+            .locator(`//select[contains(@name,'GlobalAddressInputSet-State')]`),
+        alias,
+      );
     },
     dropdownval: (label: string | RegExp, alias?: string) => {
-      return component(() => getLocatorByText(label).locator('xpath=ancestor::*[contains(@class,"gw-InputWidget")]//select'), alias);
+      return component(
+        () => getLocatorByText(label).locator('xpath=ancestor::*[contains(@class,"gw-InputWidget")]//select'),
+        alias,
+      );
     },
     radioOption: (label: string | RegExp, alias?: string) => {
       return component(() => getLocatorByRole('radio', { name: label }), alias);
@@ -149,7 +176,11 @@ export const pageComponents = {
       return component(() => getLocatorByRole('menuitem', { name: label }).locator('..'), alias);
     },
     clickbutton: () => {
-      return component(() => getLocator('#FNOLWizard-FNOLWizard_FindPolicyScreen-FNOLWizardFindPolicyPanelSet-NewClaimPolicyGeneralPanelSet-NewClaimPolicyGeneralDV-Insured_Name-Insured_NameMenuIcon div[role="button"]'))
+      return component(() =>
+        getLocator(
+          '#FNOLWizard-FNOLWizard_FindPolicyScreen-FNOLWizardFindPolicyPanelSet-NewClaimPolicyGeneralPanelSet-NewClaimPolicyGeneralDV-Insured_Name-Insured_NameMenuIcon div[role="button"]',
+        ),
+      );
     },
     topSearch: (label: string | RegExp, alias?: string) => {
       return component(() => getLocator(`//*[@aria-label='${label}']`), alias);
@@ -158,7 +189,11 @@ export const pageComponents = {
       return component(() => getLocatorByRole('menuitem').filter({ hasText: label }), alias);
     },
     textPolicy: (label: string | RegExp, alias?: string) => {
-      return component(() => getLocatorByText(label).locator('xpath=ancestor::div[contains(@class,"gw-InputWidget")]').locator('input'), alias);
+      return component(
+        () =>
+          getLocatorByText(label).locator('xpath=ancestor::div[contains(@class,"gw-InputWidget")]').locator('input'),
+        alias,
+      );
     },
     reportedByName: (alias?: string) => {
       const selector = 'select[name*="ReportedBy_Name"]';
@@ -170,11 +205,18 @@ export const pageComponents = {
     //   }, alias);
     // },
     textPolicyNumber: (label: string | RegExp, alias?: string) => {
-      return component(() => getLocatorByText(label).locator('xpath=ancestor::div[contains(@class,"gw-InputWidget")]').locator('input'), alias);
+      return component(
+        () =>
+          getLocatorByText(label).locator('xpath=ancestor::div[contains(@class,"gw-InputWidget")]').locator('input'),
+        alias,
+      );
     },
     optionsMenu: (label: string | RegExp, alias?: string) => {
       return component(() => {
-        return getLocatorByText(label).locator('xpath=ancestor::div[contains(@class,"gw-InputWidget")]').first().locator('div[role="button"][aria-label="options"]');
+        return getLocatorByText(label)
+          .locator('xpath=ancestor::div[contains(@class,"gw-InputWidget")]')
+          .first()
+          .locator('div[role="button"][aria-label="options"]');
       }, alias);
     },
     topMenuDropdown: (label: string | RegExp, alias?: string) => {
@@ -203,7 +245,7 @@ export const pageComponents = {
         return getLocatorByRole('menuitem', { name: label });
       }, alias);
     },
-  }
+  },
 };
 
 // export const locators = {
