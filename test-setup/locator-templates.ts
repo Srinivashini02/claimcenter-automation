@@ -66,6 +66,63 @@ export const pageComponents = {
     searchItem: (label: string | RegExp, alias?: string) => {
       return component(() => getLocatorByRole('menuitem').filter({ hasText: label }), alias);
     },
+    exposuresMenu: (page: Page, name?: string): Locator => {
+      return page.getByRole('menuitem', { name: new RegExp(name ?? 'exposures', 'i') });
+    },
+    exposureCheckbox: (page: Page, index: number = 0): Locator => {
+      return page.getByRole('checkbox').nth(index);
+    },
+    createReserveButton: (page: Page, name?: string): Locator => {
+      return page.getByRole('button', { name: new RegExp(name ?? 'create reserve', 'i') });
+    },
+    reserveCheckbox: (page: Page, index: number = 0): Locator => {
+      return page.getByRole('checkbox').nth(index);
+    },
+    reserveCostTypeDropdown: (page: Page, index: number = 0): Locator => {
+      return page.locator('select[name$="CostType"]').nth(index);
+    },
+    reserveCostCategoryDropdown: (page: Page, index: number = 0): Locator => {
+      return page.locator('select[name$="CostCategory"]').nth(index);
+    },
+    reserveAmountField: (page: Page, index: number = 0): Locator => {
+      return page.locator('input[name$="NewAmount"]').nth(index);
+    },
+    saveButton: (page: Page, name?: string): Locator => {
+      return page.getByRole('button', { name, exact: true });
+    },
+    workplanMenuItem: (page: Page): Locator => {
+      return page.getByText('Workplan', { exact: true });
+    },
+    selectAllActivitiesCheckbox: (page: Page): Locator => {
+      return page.getByRole('checkbox', { name: /select rows/i });
+    },
+    completeButton: (page: Page, name?: string): Locator => {
+      return page.getByRole('button', { name, exact: true });
+    },
+    exposureMenuItem: (page: Page): Locator => {
+      return page.locator('#Claim-MenuLinks-Claim_ClaimExposures').getByRole('menuitem');
+    },
+    closeExpoBtn: (page: Page, name?: string): Locator => {
+      return page.getByRole('button', { name, exact: true });
+    },
+    notesTextArea: (page: Page): Locator => {
+      return page.locator('textarea[name="CloseExposurePopup-CloseExposureScreen-CloseExposureInfoDV-Note"]');
+    },
+    closeClaimNotes: (page: Page): Locator => {
+      return page.locator('textarea[name="CloseClaimPopup-CloseClaimScreen-CloseClaimInfoDV-Note"]');
+    },
+    outcomeDropdown: (page: Page): Locator => {
+      return page.locator('[id*="CloseExposurePopup"]').getByRole('combobox');
+    },
+    outcomecloseclaim: (page: Page): Locator => {
+      return page.locator('[id*="CloseClaimPopup"]').getByRole('combobox');
+    },
+    actionsButton: (page: Page): Locator => {
+      return page.getByRole('button', { name: /actions/i });
+    },
+    closeClaimMenuItem: (page: Page): Locator => {
+      return page.getByRole('menuitem', { name: /close claim/i });
+    },
     textPolicy: (label: string | RegExp, alias?: string) => {
       return component(
         () =>
