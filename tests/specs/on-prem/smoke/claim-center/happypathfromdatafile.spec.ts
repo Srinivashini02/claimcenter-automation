@@ -11,7 +11,7 @@ test.describe.configure({ mode: 'parallel' });
 const cc = xcenters.ccCloud;
 
 test.describe('Claims Center Suite', () => {
-  test('Claims Center Login', { tag: '@smoke' }, async () => {
+  test('Claims Center Login', { tag: '@smoke' }, async ({ page }) => {
     const claimsData = { claim: await getClaimsData('TC3') };
     console.log('Claims Data from excel sheet', claimsData);
     console.log('Full Claims Data:', JSON.stringify(claimsData, null, 2));
@@ -33,10 +33,8 @@ test.describe('Claims Center Suite', () => {
     await cc.addClaimHelper.addclaimInfo(claimsData);
     await cc.serviceHelper.service();
     //Save and Assign Claim
-    await cc.saveAssignHelper.saveAssign();
+    await cc.saveAssignHelper.saveAssign(page, 'Jacob Murphy');
     //New Claim Saved
     await cc.savedHelper.newClaimsaved();
-    //Click on Actions
-    await cc.actionHelper.clickActionsMenu();
   });
 });

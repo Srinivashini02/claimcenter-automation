@@ -1,6 +1,7 @@
 import { getLocator, getLocatorByLabel, getLocatorByRole, getLocatorByTestId, getLocatorByText } from '@locator-utils';
 import { GetByRoleOptions, GetByRoleTypes } from '@parameter-types';
 import { component } from '@playwright-utils';
+import { Locator, Page } from '@playwright/test';
 
 export const components = {
   getByTestId: (testId: string | RegExp, alias?: string, attributeName?: string) => {
@@ -41,8 +42,14 @@ export const pageComponents = {
     button: (label: string | RegExp, alias?: string) => {
       return component(() => getLocatorByRole('button', { name: `${label}` }), alias);
     },
+    buttonexp: (page: Page, name: string, description?: string): Locator => {
+      return page.getByRole('button', { name: new RegExp(`^${name}$`, 'i') });
+    },
     searchButton: (label: string | RegExp = /Search/i, alias?: string) => {
       return component(() => getLocatorByRole('link', { name: label, exact: true }), alias);
+    },
+    okButton: (page: Page, name?: string): Locator => {
+      return page.getByRole('button', { name: new RegExp(name ?? 'ok', 'i') });
     },
     claimTab: (alias?: string) => {
       return component(() => getLocator('#TabBar-ClaimTab > .gw-action--inner'), alias);
@@ -92,6 +99,11 @@ export const pageComponents = {
         return component(() => getLocator(`//tr[contains(., '${label}')]//select`), alias);
       }
       return component(() => getLocatorByLabel(`${label}`, { exact: true }).locator(`select`), alias);
+    },
+    claimantDropdown: (page: Page, name?: string): Locator => {
+      return page
+        .getByRole('combobox', { name: new RegExp(name ?? 'claimant', 'i') })
+        .or(page.locator('select[name$="Claimant_Picker"]'));
     },
     dropdownval: (label: string | RegExp, alias?: string) => {
       return component(
@@ -236,6 +248,9 @@ export const pageComponents = {
   shared: {
     menuItem: (label: string, alias?: string) => {
       return component(() => getLocatorByRole('menuitem').locator(`//*[contains(text(),'${label}')]/..`), alias);
+    },
+    menuitemexp: (page: Page, name: string, description?: string): Locator => {
+      return page.getByRole('menuitem', { name: new RegExp(`^${name}$`, 'i') });
     },
     searchIcon: (label: string, alias?: string) => {
       return component(() => getLocatorByLabel(`${label}`).getByRole(`button`), alias);

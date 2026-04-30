@@ -105,6 +105,12 @@ export async function basicInfo(fullName: string) {
   await steps.click(nextButton);
 }
 
+export async function addClaim(lossVal: string, fulladdress: string) {
+  await steps.selectOptionByText(lossCauseVal, lossVal);
+  await steps.selectOptionByText(locate, fulladdress);
+  await steps.click(nextButton);
+}
+
 export async function addclaimInfo(claimsData: { claim: Claim }) {
   const page = getPage();
   await steps.waitForPageToLoad(addClaimInformationPage);
