@@ -149,6 +149,32 @@ export async function selectOptionByText(
   });
 }
 
+export async function selectOptionByPartialText(
+  component: Component,
+  value: string | undefined,
+  options?: SelectOptions,
+  description?: string,
+) {
+  if (!value) return;
+
+  const stepDesc = description || `Selecting option containing "${value}" in ${component.alias}`;
+
+  await test.step(stepDesc, async () => {
+    const dropdown = component.getLocator();
+
+    // Find the option using Playwright's built-in partial text matcher
+    const targetOption = dropdown.locator('option').filter({ hasText: value }).first();
+
+    // Get the exact text as it appears in the DOM
+    const exactLabel = await targetOption.innerText();
+
+    // Select using the exact label derived from the partial match
+    await dropdown.selectOption({ label: exactLabel.trim() }, options);
+
+    logger.info(`Successfully selected partial match: "${exactLabel.trim()}"`);
+  });
+}
+
 export async function selectOptionByValue(
   component: Component,
   value: string | undefined,

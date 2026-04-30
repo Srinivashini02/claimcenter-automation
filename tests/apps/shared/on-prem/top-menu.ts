@@ -68,62 +68,6 @@ export async function createpolicy(
   addressTypeVal: string,
 ) {
   await test.step(`Create Policy`, async () => {
-    const stateMap: Record<string, string> = {
-      AL: 'Alabama',
-      AK: 'Alaska',
-      AZ: 'Arizona',
-      AR: 'Arkansas',
-      CA: 'California',
-      CO: 'Colorado',
-      CT: 'Connecticut',
-      DE: 'Delaware',
-      DC: 'District of Columbia',
-      FL: 'Florida',
-      GA: 'Georgia',
-      HI: 'Hawaii',
-      ID: 'Idaho',
-      IL: 'Illinois',
-      IN: 'Indiana',
-      IA: 'Iowa',
-      KS: 'Kansas',
-      KY: 'Kentucky',
-      LA: 'Louisiana',
-      ME: 'Maine',
-      MD: 'Maryland',
-      MA: 'Massachusetts',
-      MI: 'Michigan',
-      MN: 'Minnesota',
-      MS: 'Mississippi',
-      MO: 'Missouri',
-      MT: 'Montana',
-      NE: 'Nebraska',
-      NV: 'Nevada',
-      NH: 'New Hampshire',
-      NJ: 'New Jersey',
-      NM: 'New Mexico',
-      NY: 'New York',
-      NC: 'North Carolina',
-      ND: 'North Dakota',
-      OH: 'Ohio',
-      OK: 'Oklahoma',
-      OR: 'Oregon',
-      PA: 'Pennsylvania',
-      PR: 'Puerto Rico',
-      RI: 'Rhode Island',
-      SC: 'South Carolina',
-      SD: 'South Dakota',
-      TN: 'Tennessee',
-      TX: 'Texas',
-      UT: 'Utah',
-      VT: 'Vermont',
-      VA: 'Virginia',
-      WA: 'Washington',
-      WV: 'West Virginia',
-      WI: 'Wisconsin',
-      WY: 'Wyoming',
-    };
-
-    const stateFieldVal = stateMap[stateValue];
     await steps.click(unVerifiedPolicy);
     await steps.typeText(findPolicyNumber, policyNum);
     await steps.click(type);
@@ -143,7 +87,7 @@ export async function createpolicy(
     await steps.typeText(address1, address1Val);
     await steps.typeText(cityField, cityVal);
     await StateField.waitForStable();
-    await steps.selectOptionByText(StateField, stateFieldVal);
+    await steps.selectOptionByText(StateField, stateValue);
     await zipCodeField.waitForStable();
     await steps.pressSequentially(zipCodeField, zipCodeVal, { delay: 400 });
     await steps.typeText(zipCodeField, zipCodeVal);
@@ -164,11 +108,14 @@ export async function basicInfo(fullName: string) {
 export async function addclaimInfo(claimsData: { claim: Claim }) {
   const page = getPage();
   await steps.waitForPageToLoad(addClaimInformationPage);
-  await steps.typeText(whatHappened, claimsData.claim.lossInfo?.whatHappened ?? '');
-  await steps.selectOptionByText(lossCauseVal, claimsData.claim.lossInfo?.lossCause ?? '');
-  await steps.selectOptionByText(
+  await steps.typeText(whatHappened, claimsData.claim.lossData?.whatHappened ?? '');
+  await steps.selectOptionByText(lossCauseVal, claimsData.claim.lossData?.lossCause ?? '');
+  await steps.selectOptionByPartialText(
     locate,
-    `${claimsData.claim.address1 ?? ' '}, ${claimsData.claim.city ?? ' '}, ${claimsData.claim.state ?? ' '} ${claimsData.claim.zipcode ?? ' '}`,
+    `${claimsData.claim.policyData.address1 ?? ' '}, ${claimsData.claim.policyData.city ?? ' '}`,
+
+    // locate,
+    // `${claimsData.claim.policyData.address1 ?? ' '}, ${claimsData.claim.policyData.city ?? ' '}, ${claimsData.claim.policyData.state ?? ' '} ${claimsData.claim.policyData.zipcode ?? ' '}`,
   );
   await steps.click(nextButton);
 }
