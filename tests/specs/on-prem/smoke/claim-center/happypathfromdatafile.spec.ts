@@ -12,7 +12,7 @@ const cc = xcenters.ccCloud;
 
 test.describe('Claims Center Suite', () => {
   test('Claims Center Login', { tag: '@smoke' }, async () => {
-    const claimsData = { claim: await getClaimsData('TC1') };
+    const claimsData = { claim: await getClaimsData('TC3') };
     console.log('Claims Data from excel sheet', claimsData);
     console.log('Full Claims Data:', JSON.stringify(claimsData, null, 2));
 
