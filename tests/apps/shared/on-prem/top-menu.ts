@@ -1,6 +1,6 @@
 import { getPage } from '@playwright-utils';
 import { steps } from '@playwright-utils/steps';
-import test, { expect } from '@playwright/test';
+import test, { Page, expect } from '@playwright/test';
 import { pageComponents } from 'test-setup/locator-templates';
 import { Claim } from '@tests/testdata/types/cc-types';
 
@@ -105,6 +105,12 @@ export async function basicInfo(fullName: string) {
   await steps.click(nextButton);
 }
 
+export async function addClaim(lossVal: string, fulladdress: string) {
+  await steps.selectOptionByText(lossCauseVal, lossVal);
+  await steps.selectOptionByText(locate, fulladdress);
+  await steps.click(nextButton);
+}
+
 export async function addclaimInfo(claimsData: { claim: Claim }) {
   const page = getPage();
   await steps.waitForPageToLoad(addClaimInformationPage);
@@ -157,4 +163,22 @@ export async function insuredName() {
   //const newPerson = page.getByRole('menuitem', { name: 'New Person' });
   //await expect(newPerson).toBeVisible();
   //await newPerson.click();
+}
+
+export async function openActionsMenu(page: Page) {
+  const actions = pageComponents.onprem.actionsButton(page);
+
+  await expect(actions).toBeVisible();
+  await expect(actions).toBeEnabled();
+
+  await actions.click();
+}
+
+export async function clickCloseClaim(page: Page) {
+  const closeClaim = pageComponents.onprem.closeClaimMenuItem(page);
+
+  await expect(closeClaim).toBeVisible();
+  await expect(closeClaim).toBeEnabled();
+
+  await closeClaim.click();
 }

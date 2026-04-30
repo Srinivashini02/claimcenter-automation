@@ -1,6 +1,7 @@
 import { getLocator, getLocatorByLabel, getLocatorByRole, getLocatorByTestId, getLocatorByText } from '@locator-utils';
 import { GetByRoleOptions, GetByRoleTypes } from '@parameter-types';
 import { component } from '@playwright-utils';
+import { Locator, Page } from '@playwright/test';
 
 export const components = {
   getByTestId: (testId: string | RegExp, alias?: string, attributeName?: string) => {
@@ -41,8 +42,14 @@ export const pageComponents = {
     button: (label: string | RegExp, alias?: string) => {
       return component(() => getLocatorByRole('button', { name: `${label}` }), alias);
     },
+    buttonexp: (page: Page, name: string, description?: string): Locator => {
+      return page.getByRole('button', { name: new RegExp(`^${name}$`, 'i') });
+    },
     searchButton: (label: string | RegExp = /Search/i, alias?: string) => {
       return component(() => getLocatorByRole('link', { name: label, exact: true }), alias);
+    },
+    okButton: (page: Page, name?: string): Locator => {
+      return page.getByRole('button', { name: new RegExp(name ?? 'ok', 'i') });
     },
     claimTab: (alias?: string) => {
       return component(() => getLocator('#TabBar-ClaimTab > .gw-action--inner'), alias);
@@ -58,6 +65,63 @@ export const pageComponents = {
     // },
     searchItem: (label: string | RegExp, alias?: string) => {
       return component(() => getLocatorByRole('menuitem').filter({ hasText: label }), alias);
+    },
+    exposuresMenu: (page: Page, name?: string): Locator => {
+      return page.getByRole('menuitem', { name: new RegExp(name ?? 'exposures', 'i') });
+    },
+    exposureCheckbox: (page: Page, index: number = 0): Locator => {
+      return page.getByRole('checkbox').nth(index);
+    },
+    createReserveButton: (page: Page, name?: string): Locator => {
+      return page.getByRole('button', { name: new RegExp(name ?? 'create reserve', 'i') });
+    },
+    reserveCheckbox: (page: Page, index: number = 0): Locator => {
+      return page.getByRole('checkbox').nth(index);
+    },
+    reserveCostTypeDropdown: (page: Page, index: number = 0): Locator => {
+      return page.locator('select[name$="CostType"]').nth(index);
+    },
+    reserveCostCategoryDropdown: (page: Page, index: number = 0): Locator => {
+      return page.locator('select[name$="CostCategory"]').nth(index);
+    },
+    reserveAmountField: (page: Page, index: number = 0): Locator => {
+      return page.locator('input[name$="NewAmount"]').nth(index);
+    },
+    saveButton: (page: Page, name?: string): Locator => {
+      return page.getByRole('button', { name, exact: true });
+    },
+    workplanMenuItem: (page: Page): Locator => {
+      return page.getByText('Workplan', { exact: true });
+    },
+    selectAllActivitiesCheckbox: (page: Page): Locator => {
+      return page.getByRole('checkbox', { name: /select rows/i });
+    },
+    completeButton: (page: Page, name?: string): Locator => {
+      return page.getByRole('button', { name, exact: true });
+    },
+    exposureMenuItem: (page: Page): Locator => {
+      return page.locator('#Claim-MenuLinks-Claim_ClaimExposures').getByRole('menuitem');
+    },
+    closeExpoBtn: (page: Page, name?: string): Locator => {
+      return page.getByRole('button', { name, exact: true });
+    },
+    notesTextArea: (page: Page): Locator => {
+      return page.locator('textarea[name="CloseExposurePopup-CloseExposureScreen-CloseExposureInfoDV-Note"]');
+    },
+    closeClaimNotes: (page: Page): Locator => {
+      return page.locator('textarea[name="CloseClaimPopup-CloseClaimScreen-CloseClaimInfoDV-Note"]');
+    },
+    outcomeDropdown: (page: Page): Locator => {
+      return page.locator('[id*="CloseExposurePopup"]').getByRole('combobox');
+    },
+    outcomecloseclaim: (page: Page): Locator => {
+      return page.locator('[id*="CloseClaimPopup"]').getByRole('combobox');
+    },
+    actionsButton: (page: Page): Locator => {
+      return page.getByRole('button', { name: /actions/i });
+    },
+    closeClaimMenuItem: (page: Page): Locator => {
+      return page.getByRole('menuitem', { name: /close claim/i });
     },
     textPolicy: (label: string | RegExp, alias?: string) => {
       return component(
@@ -92,6 +156,11 @@ export const pageComponents = {
         return component(() => getLocator(`//tr[contains(., '${label}')]//select`), alias);
       }
       return component(() => getLocatorByLabel(`${label}`, { exact: true }).locator(`select`), alias);
+    },
+    claimantDropdown: (page: Page, name?: string): Locator => {
+      return page
+        .getByRole('combobox', { name: new RegExp(name ?? 'claimant', 'i') })
+        .or(page.locator('select[name$="Claimant_Picker"]'));
     },
     dropdownval: (label: string | RegExp, alias?: string) => {
       return component(
@@ -236,6 +305,9 @@ export const pageComponents = {
   shared: {
     menuItem: (label: string, alias?: string) => {
       return component(() => getLocatorByRole('menuitem').locator(`//*[contains(text(),'${label}')]/..`), alias);
+    },
+    menuitemexp: (page: Page, name: string, description?: string): Locator => {
+      return page.getByRole('menuitem', { name: new RegExp(`^${name}$`, 'i') });
     },
     searchIcon: (label: string, alias?: string) => {
       return component(() => getLocatorByLabel(`${label}`).getByRole(`button`), alias);

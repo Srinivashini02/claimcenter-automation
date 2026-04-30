@@ -17,6 +17,7 @@ export * as addClaimInformation from 'tests/apps/pages/on-prem/lossDetails_addCl
 export * as searchOrCreatePolicy from 'tests/apps/pages/on-prem/findPolicy_SearchOrCreatePolicy';
 export * as saveAndAssignClaim from 'tests/apps/pages/on-prem/saveAndAssignClaim';
 export * as services from 'tests/apps/pages/on-prem/services';
+export * as workplanHelper from 'tests/apps/pages/on-prem/workplan';
 
 export async function loginToCCApp(role: string) {
   await appHelpers.navigateToAppCC(APP.claimCenter);
