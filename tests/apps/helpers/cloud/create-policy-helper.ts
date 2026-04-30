@@ -1,10 +1,10 @@
-import * as cc from '@apps/claim-center/cloud/index';
+import * as cc from '@apps/claim-center/on-prem/index';
 import test from '@playwright/test';
 import { Claim } from '@tests/testdata/types/cc-types';
 
 export async function createPolicy(claimsData: { claim: Claim }) {
   await test.step(`Search or Create Policy`, async () => {
-    await cc.topmenu.createpolicy(
+    await cc.searchOrCreatePolicy.createpolicy(
       claimsData.claim.policyData.policyNumber ?? '',
       claimsData.claim.policyData.policyType ?? '',
       claimsData.claim.policyData.date ?? '',
