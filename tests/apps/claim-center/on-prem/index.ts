@@ -12,6 +12,11 @@ export * as saveAssignHelper from 'tests/apps/helpers/on-prem/save-assign-helper
 export * as savedHelper from 'tests/apps/helpers/on-prem/saved-claim-helper';
 //export * as actionHelper from 'tests/apps/helpers/cloud/action-menu-helper';
 export * as topmenu from 'tests/apps/shared/on-prem/top-menu';
+export * as basicInformation from 'tests/apps/pages/on-prem/basicInfo_basicInformation';
+export * as addClaimInformation from 'tests/apps/pages/on-prem/lossDetails_addClaimInformation';
+export * as searchOrCreatePolicy from 'tests/apps/pages/on-prem/findPolicy_SearchOrCreatePolicy';
+export * as saveAndAssignClaim from 'tests/apps/pages/on-prem/saveAndAssignClaim';
+export * as services from 'tests/apps/pages/on-prem/services';
 
 export async function loginToCCApp(role: string) {
   await appHelpers.navigateToAppCC(APP.claimCenter);

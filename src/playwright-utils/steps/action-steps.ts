@@ -1,7 +1,7 @@
 import { logger } from '@logger';
 import { test } from '@pagesetup';
 import * as p from 'src/playwright-utils/utils';
-import { Component, component, waitForAllRequests } from '@playwright-utils';
+import { Component, waitForAllRequests } from '@playwright-utils';
 import {
   ClearOptions,
   ClickOptions,
@@ -146,6 +146,32 @@ export async function selectOptionByText(
     : `selecting option ${value} in the element ${component.alias} by using value attribute`;
   await test.step(stepDesc, async () => {
     await p.selectByText(component.getLocator(), value, options);
+  });
+}
+
+export async function selectOptionByPartialText(
+  component: Component,
+  value: string | undefined,
+  options?: SelectOptions,
+  description?: string,
+) {
+  if (!value) return;
+
+  const stepDesc = description || `Selecting option containing "${value}" in ${component.alias}`;
+
+  await test.step(stepDesc, async () => {
+    const dropdown = component.getLocator();
+
+    // Find the option using Playwright's built-in partial text matcher
+    const targetOption = dropdown.locator('option').filter({ hasText: value }).first();
+
+    // Get the exact text as it appears in the DOM
+    const exactLabel = await targetOption.innerText();
+
+    // Select using the exact label derived from the partial match
+    await dropdown.selectOption({ label: exactLabel.trim() }, options);
+
+    logger.info(`Successfully selected partial match: "${exactLabel.trim()}"`);
   });
 }
 
@@ -323,6 +349,20 @@ export async function selectOption(
       await p.selectByText(component.getLocator(), value, options);
     } catch (error) {
       await p.selectByValue(component.getLocator(), value, options);
+    }
+  });
+}
+export async function waitForPageToLoad(component: Component, description?: string) {
+  const stepDesc = description ? description : `waiting for page '${component.alias}' to load`;
+  await test.step(stepDesc, async () => {
+    await p.waitForElementToBeVisible(component.getLocator());
+    try {
+      if (component.alias) {
+        await p.getPage().waitForFunction(pagetitle => document.title.includes(pagetitle), component.alias);
+        logger.warn(` '${component.alias}' page is loaded successfully `);
+      }
+    } catch (error) {
+      logger.warn(`page title did not contain '${component.alias}' after waiting for page to load`);
     }
   });
 }

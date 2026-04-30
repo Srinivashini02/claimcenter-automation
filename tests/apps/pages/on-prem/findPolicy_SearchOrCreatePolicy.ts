@@ -1,23 +1,14 @@
 import { getPage } from '@playwright-utils';
 import { steps } from '@playwright-utils/steps';
-import test, { expect } from '@playwright/test';
+import test from '@playwright/test';
 import { pageComponents } from 'test-setup/locator-templates';
-import { Claim } from '@tests/testdata/types/cc-types';
 
-const search = pageComponents.onprem.searchItem('Searc', 'search');
-const policy = pageComponents.onprem.textPolicy('Policy #', 'policyNumber');
-const searchsubmit = pageComponents.onprem.searchButton('Search', 'searchSubmit');
-const claimTab = pageComponents.onprem.claimTab('Claim');
-const newClaimOption = pageComponents.onprem.claimTabExpandButton('Claim');
-const newClaimMenu = pageComponents.onprem.newClaimMenuItem('New Claim');
 const unVerifiedPolicy = pageComponents.cloud.radioOption('Create Unverified Policy', 'create unverified policy');
 const findPolicyNumber = pageComponents.cloud.textPolicyNumber('Policy Number', 'policy number');
 const type = pageComponents.cloud.dropdownval('Type', 'type');
 const lossDateInput = pageComponents.cloud.input('Loss Date', 'Loss Date Input');
 const effectiveDateInput = pageComponents.cloud.input('Effective Date', 'Effective Date Input');
 const expirationDateInput = pageComponents.cloud.input('Expiration Date', 'Expiration Date Input');
-const insuredNameOptions = pageComponents.cloud.optionsMenu('Name', 'Insured Name Options');
-const newPerson = pageComponents.shared.submenuItem('New Person', 'New Person Menu Item');
 const firstName = pageComponents.cloud.input('First name', 'first name Input');
 const lastName = pageComponents.cloud.input('Last name', 'last name Input');
 const address1 = pageComponents.cloud.input('Address 1', 'address 1');
@@ -27,31 +18,6 @@ const zipCodeField = pageComponents.cloud.textInput('ZIP Code', 'ZIP code');
 const addressType = pageComponents.cloud.dropdown('Address Type', 'address type');
 const update = pageComponents.cloud.button('Update', 'update');
 const nextButton = pageComponents.cloud.button('Next', 'Next Button');
-const reportedByNameOn = pageComponents.onprem.dropdown('Name', 'Name');
-const lossCauseVal = pageComponents.cloud.dropdown('Loss Cause', 'loss cause input');
-const whatHappened = pageComponents.onprem.textarea('What Happened?', 'what happened');
-
-const locate = pageComponents.cloud.dropdown('Location', 'location Input');
-const finishBtn = pageComponents.cloud.button('Finish', 'finish button');
-const basicInformationPage = pageComponents.cloud.pageTitle('Basic information', 'Basic information');
-const addClaimInformationPage = pageComponents.cloud.pageTitle('Add claim information', 'Add claim information');
-
-export async function searchClaim(policyNumber: string) {
-  await test.step(`Search Claim`, async () => {
-    await steps.click(search);
-    await steps.click(policy);
-    await steps.typeText(policy, policyNumber);
-    await steps.click(searchsubmit);
-  });
-}
-
-export async function newClaim() {
-  await test.step(`Create new claim`, async () => {
-    await steps.click(claimTab);
-    await steps.click(newClaimOption);
-    await steps.click(newClaimMenu);
-  });
-}
 
 export async function createpolicy(
   policyNum: string,
@@ -97,35 +63,6 @@ export async function createpolicy(
     await steps.typeText(lossDateInput, date);
     await steps.click(nextButton);
   });
-}
-
-export async function basicInfo(fullName: string) {
-  await steps.waitForPageToLoad(basicInformationPage);
-  await steps.selectOptionByText(reportedByNameOn, fullName);
-  await steps.click(nextButton);
-}
-
-export async function addclaimInfo(claimsData: { claim: Claim }) {
-  const page = getPage();
-  await steps.waitForPageToLoad(addClaimInformationPage);
-  await steps.typeText(whatHappened, claimsData.claim.lossData?.whatHappened ?? '');
-  await steps.selectOptionByText(lossCauseVal, claimsData.claim.lossData?.lossCause ?? '');
-  await steps.selectOptionByPartialText(
-    locate,
-    `${claimsData.claim.policyData.address1 ?? ' '}, ${claimsData.claim.policyData.city ?? ' '}`,
-
-    // locate,
-    // `${claimsData.claim.policyData.address1 ?? ' '}, ${claimsData.claim.policyData.city ?? ' '}, ${claimsData.claim.policyData.state ?? ' '} ${claimsData.claim.policyData.zipcode ?? ' '}`,
-  );
-  await steps.click(nextButton);
-}
-
-export async function service() {
-  await steps.click(nextButton);
-}
-
-export async function saveAssign() {
-  await steps.click(finishBtn);
 }
 
 export async function insuredName() {
