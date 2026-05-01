@@ -35,7 +35,6 @@ export const pageComponents = {
     textarea: (label: string | RegExp, alias?: string) => {
       return component(() => getLocatorByLabel(label).locator('textarea'), alias);
     },
-
     link: (label: string | RegExp, alias?: string) => {
       return component(() => getLocatorByRole('link', { name: `${label}` }), alias);
     },
