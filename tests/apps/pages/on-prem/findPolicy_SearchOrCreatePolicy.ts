@@ -1,6 +1,6 @@
 import { getPage } from '@playwright-utils';
 import { steps } from '@playwright-utils/steps';
-import test from '@playwright/test';
+import test, { Page, expect } from '@playwright/test';
 import { pageComponents } from 'test-setup/locator-templates';
 
 const unVerifiedPolicy = pageComponents.cloud.radioOption('Create Unverified Policy', 'create unverified policy');

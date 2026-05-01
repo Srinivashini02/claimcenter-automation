@@ -50,6 +50,8 @@ export default defineConfig({
    * See https://playwright.dev/docs/test-reporters
    */
   reporter: [
+    ['line'],
+    ['allure-playwright'],
     ['html', { open: 'never' }], // HTML report generation
     ['dot'], // Dot format for minimal console output
     ['json', { outputFile: 'playwright-report/report.json' }], // Store JSON report
