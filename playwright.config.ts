@@ -52,7 +52,8 @@ export default defineConfig({
   reporter: [
     ['html', { open: 'never' }], // HTML report generation
     ['dot'], // Dot format for minimal console output
-    ['json', { outputFile: 'playwright-report/report.json' }], // Store JSON report
+    ['allure-playwright'],
+    //['json', { outputFile: 'playwright-report/report.json' }], // Store JSON report
   ],
   /**
    * Shared settings for all the projects below.
