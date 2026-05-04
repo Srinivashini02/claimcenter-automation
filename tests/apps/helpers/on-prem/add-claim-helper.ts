@@ -1,16 +1,9 @@
-import * as ccPrem from '@apps/claim-center/on-prem/index';
-import test, { expect } from '@playwright/test';
-import { steps } from '@playwright-utils/steps';
-import { getPage, waitForPageLoadState } from '@playwright-utils';
-import { Page } from '@playwright/test';
+import * as cc from '@apps/claim-center/on-prem/index';
+import test from '@playwright/test';
+import { Claim } from '@tests/testdata/types/cc-types';
 
-
-export async function addclaimInfo(happenedval: string, lossVal: string, fulladdress: string) {
-    await test.step(`Add Claim Information`, async () => {
-        const page = getPage();
-        const happenedBox = page.locator('div.gw-InputWidget', { hasText: 'What Happened?' }).locator('textarea');
-        await happenedBox.waitFor({ state: 'visible' });
-        await happenedBox.fill(happenedval);
-        await ccPrem.topmenu.addClaim(lossVal, fulladdress);
-    });
+export async function addclaimInfo(claimsData: { claim: Claim }) {
+  await test.step(`Add Claim Information`, async () => {
+    await cc.addClaimInformation.addclaimInfo(claimsData);
+  });
 }

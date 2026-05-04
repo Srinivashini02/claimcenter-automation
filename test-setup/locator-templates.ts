@@ -185,6 +185,38 @@ export const pageComponents = {
     pageTitle: (label: string, alias?: string) => {
       return component(() => getLocatorByRole('heading', { name: label }), alias);
     },
+    radioOption: (label: string | RegExp, alias?: string) => {
+      return component(() => getLocatorByRole('radio', { name: label }), alias);
+    },
+    textPolicyNumber: (label: string | RegExp, alias?: string) => {
+      return component(
+        () =>
+          getLocatorByText(label).locator('xpath=ancestor::div[contains(@class,"gw-InputWidget")]').locator('input'),
+        alias,
+      );
+    },
+    statedropdown: (label: string | RegExp, alias?: string) => {
+      return component(
+        () =>
+          getLocatorByText(label)
+            .locator('xpath=ancestor::*[contains(@class,"gw-InputWidget")]')
+            .locator(`//select[contains(@name,'GlobalAddressInputSet-State')]`),
+        alias,
+      );
+    },
+    optionsMenu: (label: string | RegExp, alias?: string) => {
+      return component(() => {
+        return getLocatorByText(label)
+          .locator('xpath=ancestor::div[contains(@class,"gw-InputWidget")]')
+          .first()
+          .locator('div[role="button"][aria-label="options"]');
+      }, alias);
+    },
+    submenuItem: (label: string | RegExp, alias?: string) => {
+      return component(() => {
+        return getLocatorByRole('menuitem', { name: label });
+      }, alias);
+    },
   },
 
   cloud: {
