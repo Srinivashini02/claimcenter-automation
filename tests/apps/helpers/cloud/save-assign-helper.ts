@@ -1,5 +1,9 @@
 import * as cc from '@apps/claim-center/on-prem/index';
 import test, { Page } from '@playwright/test';
+import { steps } from '@playwright-utils/steps';
+import { pageComponents } from 'test-setup/locator-templates';
+
+const finishBtn = pageComponents.cloud.button('Finish', 'finish button');
 
 export async function saveAssign(
   page: Page,
@@ -21,4 +25,8 @@ export async function saveAssign(
     await cc.saveAndAssignClaim.enterReserveAmount(page, reserveamt);
     await cc.saveAndAssignClaim.clickSaveReserve(page);
   });
+}
+
+export async function saveAndAssign() {
+  await steps.click(finishBtn);
 }

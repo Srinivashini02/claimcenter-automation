@@ -18,11 +18,11 @@ import { closeClaimOutcome, closecla, enterCloseClaimNotes } from '@tests/apps/p
 
 test.describe.configure({ mode: 'parallel' });
 
-const cc = xcenters.ccCloud;
+const cc = xcenters.ccOnPrem;
 
 test.describe('Claims Center Suite', () => {
   test('Claims Center Login', { tag: '@smoke' }, async ({ page }) => {
-    const claimsData = { claim: await getClaimsData('TC3') };
+    const claimsData = { claim: await getClaimsData('TC1') };
     console.log('Claims Data from excel sheet', claimsData);
     console.log('Full Claims Data:', JSON.stringify(claimsData, null, 2));
 
@@ -44,6 +44,7 @@ test.describe('Claims Center Suite', () => {
     await cc.serviceHelper.service();
     //Save and Assign Claim
     await cc.saveAssignHelper.saveAssign(page, 'Jacob Murphy', 'Claim Cost', 'Unspecified Cost Category', '250');
+    // await cc.saveAssignHelper.saveAndAssign();
     //New Claim Saved
     //await cc.savedHelper.newClaimsaved();
     await openWorkplan(page);
