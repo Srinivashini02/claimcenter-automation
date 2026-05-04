@@ -43,8 +43,8 @@ test.describe('Claims Center Suite', () => {
     await cc.addClaimHelper.addclaimInfo(claimsData);
     await cc.serviceHelper.service();
     //Save and Assign Claim
-    // await cc.saveAssignHelper.saveAssign(page, 'Jacob Murphy', 'Claim Cost', 'Unspecified Cost Category', '250');
-    await cc.saveAssignHelper.saveAndAssign();
+    await cc.saveAssignHelper.saveAssign(page, 'Jacob Murphy', 'Claim Cost', 'Unspecified Cost Category', '250');
+    // await cc.saveAssignHelper.saveAndAssign();
     //New Claim Saved
     //await cc.savedHelper.newClaimsaved();
     await openWorkplan(page);

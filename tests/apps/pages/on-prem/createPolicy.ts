@@ -18,6 +18,8 @@ const zipCodeField = pageComponents.onprem.textInput('ZIP Code', 'ZIP code');
 const addressType = pageComponents.onprem.dropdown('Address Type', 'address type');
 const update = pageComponents.onprem.button('Update', 'update');
 const nextButton = pageComponents.onprem.button('Next', 'Next Button');
+const nameButton = pageComponents.onprem.optionsMenu('Name', 'Name');
+const newPerson = pageComponents.onprem.submenuItem('New Person', 'New Person Menu Item');
 
 export async function createpolicy(
   policyNum: string,
@@ -44,9 +46,6 @@ export async function createpolicy(
     await steps.typeText(effectiveDateInput, effDate);
     await steps.typeText(expirationDateInput, expDate);
     await insuredName();
-    // await steps.click(insuredNameOptions);
-    // await steps.wait(300);
-    // await steps.click(newPerson);
     await steps.typeText(firstName, firstNameVal);
     await steps.typeText(lastName, lastNameVal);
     await steps.scrollToView(address1);
@@ -66,33 +65,9 @@ export async function createpolicy(
 }
 
 export async function insuredName() {
-  const page = getPage();
-
-  await page
-    .locator(
-      '#FNOLWizard-FNOLWizard_FindPolicyScreen-FNOLWizardFindPolicyPanelSet-NewClaimPolicyGeneralPanelSet-NewClaimPolicyGeneralDV-Insured_Name-Insured_NameMenuIcon div[role="button"]',
-    )
-    .click();
-  if (
-    !(await page
-      .locator(
-        '#FNOLWizard-FNOLWizard_FindPolicyScreen-FNOLWizardFindPolicyPanelSet-NewClaimPolicyGeneralPanelSet-NewClaimPolicyGeneralDV-Insured_Name-ClaimNewContactPickerMenuItemSet-NewContactPickerMenuItemSet_NewPerson div[role="menuitem"]',
-      )
-      .isVisible())
-  ) {
-    await page
-      .locator(
-        '#FNOLWizard-FNOLWizard_FindPolicyScreen-FNOLWizardFindPolicyPanelSet-NewClaimPolicyGeneralPanelSet-NewClaimPolicyGeneralDV-Insured_Name-Insured_NameMenuIcon div[role="button"]',
-      )
-      .click();
+  await steps.click(nameButton);
+  if (!(await newPerson.isVisible())) {
+    await steps.click(nameButton);
   }
-  await page
-    .locator(
-      '#FNOLWizard-FNOLWizard_FindPolicyScreen-FNOLWizardFindPolicyPanelSet-NewClaimPolicyGeneralPanelSet-NewClaimPolicyGeneralDV-Insured_Name-ClaimNewContactPickerMenuItemSet-NewContactPickerMenuItemSet_NewPerson div[role="menuitem"]',
-    )
-    .click();
-  //await steps.click(insuredNameOptions);
-  //const newPerson = page.getByRole('menuitem', { name: 'New Person' });
-  //await expect(newPerson).toBeVisible();
-  //await newPerson.click();
+  await steps.click(newPerson);
 }

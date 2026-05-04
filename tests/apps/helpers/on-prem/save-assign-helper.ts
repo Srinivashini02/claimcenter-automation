@@ -7,13 +7,13 @@ const finishBtn = pageComponents.cloud.button('Finish', 'finish button');
 
 export async function saveAssign(
   page: Page,
-  claimantNam: string,
+  claimantName: string,
   claimCost: string,
   category: string,
   reserveamt: string,
 ) {
   await test.step(`Save and Assign Claim`, async () => {
-    await cc.saveAndAssignClaim.clickNewExposure(page, claimantNam);
+    await cc.saveAndAssignClaim.clickNewExposure(page, claimantName);
     await cc.saveAndAssignClaim.saveAssign();
     await cc.savedHelper.newClaimsaved();
     await cc.saveAndAssignClaim.clickExposures(page);
